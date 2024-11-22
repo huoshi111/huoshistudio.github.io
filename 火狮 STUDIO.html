@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/huoshi111/huoshiyinyuelogo/main/huoshiyinyuelogo.png">
+    <title>火狮 STUDIO</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            color: #333;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 160px 1fr;
+            width: 100%;
+        }
+        .sidebar {
+            background-color: #79e0db;
+            color: #0b0b0b;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .sidebar h1 {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+        .menu {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            width: 100%;
+        }
+        .menu button {
+            background-color: #5fd2d2;
+            color: #171717c5;
+            border: none;
+            padding: 10px 0;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+        .menu button:hover {
+            background-color: #5babae;
+        }
+        .content {
+            padding: 20px;
+            background-color: #d4f3edfb;
+            overflow-y: auto;
+            height: calc(100vh - 40px); /* 根据需要调整高度 */
+        }
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        .content-section.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgb(145, 145, 145);
+            padding: 60px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            z-index: 1000;
+        }
+        .login-modal input {
+            display: block;
+            margin: 10px 0;
+            padding: 8px;
+            width: 100%;
+        }
+        .login-modal button {
+            padding: 8px;
+            width: 100%;
+            background-color: #00d6bd;
+            color: rgb(0, 0, 0);
+            border: none;
+            cursor: pointer;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .user-info img {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .calendar {
+            width: 360px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            background: white;
+        }
+        .calendar-header {
+            background-color: #026566;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+        .calendar-header h2 {
+            margin: 0;
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background-color: #ddd;
+        }
+        .calendar-grid div {
+            background: white;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 14px;
+            font-weight: bold;
+            color: #2c2c2c;
+        }
+        .calendar-grid div.today {
+            background-color: #33d576;
+            color: rgb(59, 59, 59);
+            border-radius: 50%;
+        }
+        .user-info img {
+            width: 30px; /* 头像宽度 */
+            height: 30px; /* 头像高度 */
+            border-radius: 10%; /* 圆形头像 */
+            margin-right: 8px; /* 和用户名的间距 */
+        }
+        .custom-video-container {
+            width: 60%;
+            max-width: 600px;
+            position: relative;
+            cursor: pointer;
+        }
+        .custom-video {
+            width: 100%;
+            border-radius: 8px;
+        }
+        .custom-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .custom-modal-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .custom-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        .unique-video-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .unique-ad-video {
+            width: 600px;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        /* 全屏窗口样式 */
+        .unique-fullscreen-video { /*第二视频*/
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .unique-fullscreen-video video {
+            width: 90%;
+            height: auto;
+        }
+
+        .unique-close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            color: white;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+        .menu-toggle {
+            position: relative; /* 改为相对定位，避免绝对定位导致的偏移 */
+            margin-top: 10px; /* 距离 logo 一些间距 */
+            z-index: 100;
+        }
+
+        .menu-toggle button {
+            background-color: #4fdbbf;
+            border: none;
+            color: #1e1e1e;
+            font-size: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .menu-toggle button:hover {
+            background-color: #507e7e;
+        }
+
+        .sidebar.hidden {
+            display: none;
+        }
+
+        .content.fullscreen {
+            grid-column: 1 / -1;
+            width: 100%;
+        }
+
+        #huoshi01 {
+            width: 80%;
+            max-width: 800px;
+            border: 2px solid #ccc;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        #huoshi01 video {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+    </style>
+        <script>
+            // 禁止鼠标右键菜单
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+            });
+    
+            // 禁止 F12 和特定键组合（如 Ctrl+Shift+I）
+            document.addEventListener('keydown', function(e) {
+                if (
+                    e.key === 'F12' || 
+                    (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'C' || e.key === 'J')) || 
+                    (e.ctrlKey && e.key === 'U')
+                ) {
+                    e.preventDefault();
+                }
+            });
+        </script>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <img src="https://github.com/huoshi111/huoshistudioimage/blob/main/huoshistudioimage.png?raw=true" style=" height: 90px; width: 160px; ">
+            <div class="menu">
+                <button style="background-color: #35f6df;" id="login-btn" onclick="showLoginModal()">登录</button>
+                <button onclick="showContent('homepage')">主页面</button>
+                <button onclick="showContent('section1')">介绍</button>
+                <button onclick="showContent('section2')">消息</button>
+                <button onclick="showContent('section3')">联系</button>
+                <button onclick="showContent('section4')">日历</button>
+                <div id="user-buttons"></div>
+            </div>
+        </div>
+        <div class="content">
+
+            <div class="menu-toggle">
+                <button id="toggleSidebarButton" onclick="toggleSidebar()">☰</button>
+            </div>
+
+            <div id="homepage" class="content-section active">
+                <h2>首页</h2>
+                <h1 style="font-family: 'FangSong', serif; font-size: 2.5em;  color:#cc7e18; text-align: center;">火狮 STUDIO</h1>
+                <br>
+                
+                <center>
+                    <div class="custom-video-container" id="customVideoContainer">
+                        <video class="custom-video" id="customAdVideo" autoplay loop muted>
+                            <source src="https://huoshi111.github.io/huoshivideo01/huoshivideo01.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    </center>
+                    <!-- 模态窗口 -->
+                    <div class="custom-modal" id="customVideoModal">
+                        <span class="custom-close" id="customCloseModal">&times;</span>
+                        <video class="custom-modal-video" id="customModalVideo" autoplay playsinline>
+                            <source src="https://huoshi111.github.io/huoshivideo01/huoshivideo01.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+
+                <br><br><br>
+                <b> - 火狮 STUDIO 你能够在这里找到很多风景图。请登录你的火狮团队账号，用户名与密码了解更多。</b>
+                <br><br><br>
+
+                        <!-- 多个视频容器 --> <!--第二视频-->
+                         <center>
+    <div class="unique-video-container">
+        <video class="unique-ad-video" autoplay muted loop data-src="https://huoshi111.github.io/huoshistudiovideo02/huoshivideo02.mp4" >
+            <source src="https://huoshi111.github.io/huoshistudiovideo02/huoshivideo02.mp4" type="video/mp4">
+            您的浏览器不支持 HTML5 视频。
+        </video>
+    </div>
+    <!--下面是可以添加更多视频，有更多视频可以把提示给删掉
+
+    <div class="unique-video-container">
+        <video class="unique-ad-video" autoplay muted loop data-src="https://example.com/video2.mp4">
+            <source src="https://example.com/video2.mp4" type="video/mp4">
+            您的浏览器不支持 HTML5 视频。
+        </video>
+    </div>
+    <div class="unique-video-container">
+        <video class="unique-ad-video" autoplay muted loop data-src="https://example.com/video3.mp4">
+            <source src="https://example.com/video3.mp4" type="video/mp4">
+            您的浏览器不支持 HTML5 视频。
+        </video>
+    </div>
+    
+    -->
+
+    <!-- 全屏播放窗口 -->
+    <div id="uniqueFullscreenContainer" class="unique-fullscreen-video" style="display: none;">
+        <button class="unique-close-button" onclick="closeUniqueFullscreen()">×</button>
+        <video id="uniqueFullscreenVideo" controls>
+            <source src="" type="video/mp4">
+            您的浏览器不支持 HTML5 视频。
+        </video>
+    </div>
+</center>
+<!--上面是第二视频-->
+                <br>
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                <center>
+                <h6 style="color: #333;">火狮 HUOSHI © 2024 </h6>
+                <h6 style="color: #333;">火狮 STUDIO 网站 火狮 工作室 - 谷歌Google 信息保护标准，保障用户隐私与安全。</h6>
+                </center>
+            </div>
+            <div id="section1" class="content-section">
+                <br>
+                  <h2>火狮团队</h2>
+                  <p>-火狮团队，我们秉承<strong>“创意与执行并重”</strong>的理念。我们相信，火狮团队好的创意需要团队的共同努力来实现，而优秀的执行更离不开成员间的信任与默契。</p>
+                  <p>-火狮 STUDIO 的目标不仅是完成一个又一个精彩的项目，更是希望在合作中找到更多志同道合的伙伴，共同创造令人难忘的作品。</p>
+                <br><br>
+                <center>
+                    <strong>宣传</strong>
+                    <div id="huoshi01">
+                        <!-- 循环播放无声视频 -->
+                        <video autoplay loop muted>
+                            <source src="https://huoshi111.github.io/huoshivideo02/huoshivideo03.mp4" type="video/mp4">
+                            您的浏览器不支持 HTML5 视频。
+                        </video>
+                    </div>
+                </center>
+                <br>
+                <h2>以下是动漫风景图</h2>
+                <p>可以看所有的动漫二次元风景图，可使用壁纸。</p>
+                <br>
+<img src="https://github.com/huoshi111/huoshiimagelandscapeanime/blob/main/monorisu.full.2318297.png?raw=true" width="50%" >
+<img src="https://github.com/huoshi111/huoshiimagelandscapeanime02/blob/main/monorisu.full.2843735.png?raw=true" width="46%" >
+<br>
+<img src="https://github.com/huoshi111/huoshiimagelandscapeanime/blob/main/a65f56e43a784af8d9e590a366d53349.jpg?raw=true" width="30%" >
+<img src="https://github.com/huoshi111/huoshiimagelandscapeanime/blob/main/9f2fb5212f552058ea822b673c7d9088.jpg?raw=true" width="30%">
+<img src="https://github.com/huoshi111/huoshiimagelandscapeanime02/blob/main/fe435c1485091e1df8488bc2907742eb.jpg?raw=true" width="30%">
+<br>
+<img src="https://github.com/huoshi111/huoshiimagelandscapeanime02/blob/main/d1b3f18c4c2ddebdff27aa71c3438b89.jpg?raw=true" width="30%">
+<img src="https://github.com/huoshi111/huoshiimagelandscapeanime02/blob/main/b9139948944b6d04d11dd2c3e71b4b0c.jpg?raw=true" width="30%">
+<img src="https://github.com/huoshi111/huoshiimagelandscapeanime02/blob/main/158a5f9b6c5fbb7256c973dbdd26afb6.jpg?raw=true" width="30%">
+<br>
+<img src="https://github.com/huoshi111/huoshiimagelandscapeanime02/blob/main/ff15325f1a0a14605fcec8e4c847281e.jpg?raw=true" width="40%">
+            </div>
+            <div id="section2" class="content-section">
+                <h2>消息</h2>
+                <p>目前暂无任何消息，等待更新。</p>
+                <br><br><br><br>
+            <center>
+                <strong> 这里怎么找也没有信息的。。。</strong>
+            </center>
+            </div>
+            <div id="section3" class="content-section">
+                <h2>火狮团队</h2>
+                <p>联系</p>
+                <br>
+                <strong>如果你有什么建议的话可以和火狮团队讲一下。</strong>
+                <br><br>
+                <a href="https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox?compose=LRmDGfjZqVQWKjwWrhdHvFctcfpZRjBqPvTpLqDPpqbgNwVZmJtlJxrFjDVMJLFhZTGtwPFtCRTznJqZsPnNGFmkRLkVvwZHdVMNGxfPRxCqZTvjXgBNjCQqkxXlMJlxwsPkCpJjsggtPJrZnRqnVFczQDMQSC">电子邮件</a>
+                <br>
+                <center>
+                    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSerBi1xKmZTQVpyCo9qUUg9oay6rNUk-V4jcqf1xqPi0PjeWg/viewform?embedded=true" width="640" height="615" frameborder="0" marginheight="0" marginwidth="0">正在加载…</iframe>
+                </center>
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                <center>
+                    <h6 style="color: #333;">火狮 HUOSHI © 2024 </h6>
+                    <h6 style="color: #333;">火狮 STUDIO 网站 火狮 工作室 - 谷歌Google 信息保护标准，保障用户隐私与安全。</h6>
+                </center>
+            </div>
+            <div id="section4" class="content-section">
+                <h2>日历</h2>
+                <center>
+                <div class="calendar">
+                    <div class="calendar-header">
+                        <h2 id="calendar-title">2024年11月</h2>
+                    </div>
+                    <div class="calendar-grid" id="calendar-weekdays">
+                        <!-- 国际化周标题 -->
+                    </div>
+                    <div class="calendar-grid" id="calendar-days">
+                        <!-- 动态日历 -->
+                    </div>
+                </div>
+                <p> 今日暂无任何信息</p>
+                <br><br><br>
+                <strong>广告 黑色星期五 即将到来! </strong>
+                <br><br>
+<img src="https://www.elpublicista.es/adjuntos/fichero_39873_20240905.jpg" style="border-radius: 10px; width: 30%;">
+                </center>
+            </div>
+
+            <div id="user-content-a-info" class="content-section">
+                <h2>编程课时间</h2>
+                <p>火狮 编程课时间</p>
+                <br>
+                   <h2> 空闲时间</h2>
+                <br>
+                <h>上午 9:30 - 12:30 </h>
+                <br>
+                <h>下午 16:30 - 19:00 </h>
+                <br><br>
+                <h2>排课规则</h2>
+                <br>
+                <h>每周1小时课</h>
+                <br>
+                <h>优先安排 周六</h>
+                <br>
+                <h>备选安排 如周六无空，则改为周日，会有消息进行通知</h>
+                <br><br>
+                <h2>空闲日期</h2>
+                <br>
+                <p>-11 月<br>周六 11/23 11/30 <br> 周日 11/24 <br> -12月 <br> 周日 12/7 12/14 12/21 12/28 <br> 周日 12/1 12/8 12/15 12/22 12/29 </p>
+
+            </div>
+
+            <div id="user-content-a-tasks" class="content-section">
+                <h2>火狮团队任务</h2>
+                <p>任务内容。</p>
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfDiM1JOiqyJEiVdiGkNEzl1Ls2PvGWIlusBlj6NDsSaqLw3w/viewform?embedded=true" width="620" height="1709" frameborder="0" marginheight="0" marginwidth="0">正在加载…</iframe>
+            </div>
+
+            <div id="user-content-a-noti" class="content-section">
+                <h2>团队成员职责</h2>
+                <h1>火狮团队 HUOSHI</h1>
+                <p>火狮团队 HUOSHI 是一个团结创造力与激情的团队，每位成员各司其职，协作完成项目。以下是团队的职责分工：</p>
+                
+                <ul>
+                    <li><strong>领导者（团队最高层）：</strong>负责制定团队规划和目标，确保团队的方向清晰且具有前瞻性。</li>
+                    <li><strong>检查和发言（管理）：</strong>负责检查每一位成员的工作进展是否正常，并就团队的新任务或建议进行发言。</li>
+                    <li><strong>组织者：</strong>规划和组织项目，合理分配每位成员的任务，确保项目高效完成。</li>
+                    <li><strong>视频剪辑创作者：</strong>负责视频的策划、设计和剪辑工作，同时设计和撰写其他需要的文案或文字内容。</li>
+                    <li><strong>音乐音频创作者：</strong>负责制作音乐和录制音频，与视频剪辑创作者合作，确保任务的音画结合完美。</li>
+                </ul>
+                
+                <p>火狮团队秉承合作精神与专业态度，为每一个项目注入热情与创意！</p>
+            </div>
+
+            <div id="user-content-a-link" class="content-section">
+                <strong>火狮团队 工具</strong>
+                <p>工具</p>
+            </div>
+
+            <div id="user-content-b-info" class="content-section">
+                <h2>编程课时间</h2>
+                <p>火狮 编程课时间</p>
+                <br>
+                   <h2> 空闲时间</h2>
+                <br>
+                <h>上午 9:30 - 12:30 </h>
+                <br>
+                <h>下午 16:30 - 19:00 </h>
+                <br><br>
+                <h2>排课规则</h2>
+                <br>
+                <h>每周1小时课</h>
+                <br>
+                <h>优先安排 周六</h>
+                <br>
+                <h>备选安排 如周六无空，则改为周日，会有消息进行通知</h>
+                <br><br>
+                <h2>空闲日期</h2>
+                <br>
+                <p>-11 月<br>周六 11/23 11/30 <br> 周日 11/24 <br> -12月 <br> 周日 12/7 12/14 12/21 12/28 <br> 周日 12/1 12/8 12/15 12/22 12/29 </p>
+
+            </div>
+
+            <div id="user-content-b-tasks" class="content-section">
+                <h2>火狮团队任务</h2>
+                <p>任务内容。</p>
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfDiM1JOiqyJEiVdiGkNEzl1Ls2PvGWIlusBlj6NDsSaqLw3w/viewform?embedded=true" width="620" height="1709" frameborder="0" marginheight="0" marginwidth="0">正在加载…</iframe>
+            </div>
+
+            <div id="user-content-b-noti" class="content-section">
+                <h2>团队成员职责 用户 Surlin</h2>
+                <h1>火狮团队 HUOSHI</h1>
+                <p>火狮团队 HUOSHI 是一个团结创造力与激情的团队，每位成员各司其职，协作完成项目。以下是团队的职责分工：</p>
+                
+                <ul>
+                    <li><strong>领导者（团队最高层）：</strong>负责制定团队规划和目标，确保团队的方向清晰且具有前瞻性。</li>
+                    <li><strong>检查和发言（管理）(苏林，腍一)：</strong>负责检查每一位成员的工作进展是否正常，并就团队的新任务或建议进行发言。</li>
+                    <li><strong>组织者 (苏林)：</strong>规划和组织项目，合理分配每位成员的任务，确保项目高效完成。</li>
+                    <li><strong>视频剪辑创作者 (妍妍)：</strong>负责视频的策划、设计和剪辑工作，同时设计和撰写其他需要的文案或文字内容。</li>
+                    <li><strong>音乐音频创作者 (腍一)：</strong>负责制作音乐和录制音频，与视频剪辑创作者合作，确保任务的音画结合完美。</li>
+                </ul>
+                
+                <p>火狮团队秉承合作精神与专业态度，为每一个项目注入热情与创意！</p>
+            </div>
+
+            <div id="user-content-b-link" class="content-section">
+                <strong>火狮团队 工具</strong>
+                <p>工具</p>
+                <br>
+                <center>
+                <strong>目前暂无任何信息，需要等待更新。</strong>
+                </center>
+            </div>
+
+            <div id="user-content-c-info" class="content-section">
+                <h2>编程课时间</h2>
+                <p>火狮 编程课时间</p>
+                <br>
+                   <h2> 空闲时间</h2>
+                <br>
+                <h>上午 9:30 - 12:30 </h>
+                <br>
+                <h>下午 16:30 - 19:00 </h>
+                <br><br>
+                <h2>排课规则</h2>
+                <br>
+                <h>每周1小时课</h>
+                <br>
+                <h>优先安排 周六</h>
+                <br>
+                <h>备选安排 如周六无空，则改为周日，会有消息进行通知</h>
+                <br><br>
+                <h2>空闲日期</h2>
+                <br>
+                <p>-11 月<br>周六 11/23 11/30 <br> 周日 11/24 <br> -12月 <br> 周日 12/7 12/14 12/21 12/28 <br> 周日 12/1 12/8 12/15 12/22 12/29 </p>
+
+            </div>
+
+            <div id="user-content-c-tasks" class="content-section">
+                <h2>火狮团队任务</h2>
+                <p>任务内容。</p>
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfDiM1JOiqyJEiVdiGkNEzl1Ls2PvGWIlusBlj6NDsSaqLw3w/viewform?embedded=true" width="620" height="1709" frameborder="0" marginheight="0" marginwidth="0">正在加载…</iframe>
+            </div>
+
+            <div id="user-content-c-noti" class="content-section">
+                <h2>团队成员职责 用户 Renyi</h2>
+                <h1>火狮团队 HUOSHI</h1>
+                <p>火狮团队 HUOSHI 是一个团结创造力与激情的团队，每位成员各司其职，协作完成项目。以下是团队的职责分工：</p>
+                
+                <ul>
+                    <li><strong>领导者（团队最高层）：</strong>负责制定团队规划和目标，确保团队的方向清晰且具有前瞻性。</li>
+                    <li><strong>检查和发言（管理）(苏林，腍一)：</strong>负责检查每一位成员的工作进展是否正常，并就团队的新任务或建议进行发言。</li>
+                    <li><strong>组织者 (苏林)：</strong>规划和组织项目，合理分配每位成员的任务，确保项目高效完成。</li>
+                    <li><strong>视频剪辑创作者 (妍妍)：</strong>负责视频的策划、设计和剪辑工作，同时设计和撰写其他需要的文案或文字内容。</li>
+                    <li><strong>音乐音频创作者 (腍一)：</strong>负责制作音乐和录制音频，与视频剪辑创作者合作，确保任务的音画结合完美。</li>
+                </ul>
+                
+                <p>火狮团队秉承合作精神与专业态度，为每一个项目注入热情与创意！</p>
+            </div>
+
+            <div id="user-content-c-link" class="content-section">
+                <strong>火狮团队 工具</strong>
+                <p>工具</p>
+                <br>
+                <center>
+                <strong>目前暂无任何信息，需要等待更新。</strong>
+                </center>
+            </div>
+
+            <div id="user-content-d-info" class="content-section">
+                <h2>编程课时间</h2>
+                <p>火狮 编程课时间</p>
+                <br>
+                   <h2> 空闲时间</h2>
+                <br>
+                <h>上午 9:30 - 12:30 </h>
+                <br>
+                <h>下午 16:30 - 19:00 </h>
+                <br><br>
+                <h2>排课规则</h2>
+                <br>
+                <h>每周1小时课</h>
+                <br>
+                <h>优先安排 周六</h>
+                <br>
+                <h>备选安排 如周六无空，则改为周日，会有消息进行通知</h>
+                <br><br>
+                <h2>空闲日期</h2>
+                <br>
+                <p>-11 月<br>周六 11/23 11/30 <br> 周日 11/24 <br> -12月 <br> 周日 12/7 12/14 12/21 12/28 <br> 周日 12/1 12/8 12/15 12/22 12/29 </p>
+
+            </div>
+
+            <div id="user-content-d-tasks" class="content-section">
+                <h2>火狮团队任务</h2>
+                <p>任务内容。</p>
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfDiM1JOiqyJEiVdiGkNEzl1Ls2PvGWIlusBlj6NDsSaqLw3w/viewform?embedded=true" width="620" height="1709" frameborder="0" marginheight="0" marginwidth="0">正在加载…</iframe>
+            </div>
+
+            <div id="user-content-d-noti" class="content-section">
+                <h2>团队成员职责 用户 Yanyan</h2>
+                <h1>火狮团队 HUOSHI</h1>
+                <p>火狮团队 HUOSHI 是一个团结创造力与激情的团队，每位成员各司其职，协作完成项目。以下是团队的职责分工：</p>
+                
+                <ul>
+                    <li><strong>领导者（团队最高层）：</strong>负责制定团队规划和目标，确保团队的方向清晰且具有前瞻性。</li>
+                    <li><strong>检查和发言（管理）(苏林，腍一)：</strong>负责检查每一位成员的工作进展是否正常，并就团队的新任务或建议进行发言。</li>
+                    <li><strong>组织者 (苏林)：</strong>规划和组织项目，合理分配每位成员的任务，确保项目高效完成。</li>
+                    <li><strong>视频剪辑创作者 (妍妍)：</strong>负责视频的策划、设计和剪辑工作，同时设计和撰写其他需要的文案或文字内容。</li>
+                    <li><strong>音乐音频创作者 (腍一)：</strong>负责制作音乐和录制音频，与视频剪辑创作者合作，确保任务的音画结合完美。</li>
+                </ul>
+                
+                <p>火狮团队秉承合作精神与专业态度，为每一个项目注入热情与创意！</p>
+            </div>
+
+            <div id="user-content-d-link" class="content-section">
+                <strong>火狮团队 工具</strong>
+                <p>工具</p>
+                <br>
+                <center>
+                <strong>目前暂无任何信息，需要等待更新。</strong>
+                </center>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+    <div class="login-modal" id="login-modal">
+        <h2>登录</h2>
+        <input type="text" id="username" placeholder="用户名">
+        <input type="password" id="password" placeholder="密码">
+        <br>
+        <button onclick="login()">提交</button>
+    </div>
+    <script>
+        const users = {
+            "admin": { password: "111aaa", infoContentId: "user-content-a-info", tasksContentId: "user-content-a-tasks", notiContentId:"user-content-a-noti", linkContentId:"user-content-a-link", avatar: "https://example.com/avatar-a.png"  },
+            "Surlin": { password: "2Surlin2008", infoContentId: "user-content-b-info", tasksContentId: "user-content-b-tasks", notiContentId:"user-content-b-noti", linkContentId:"user-content-b-link", avatar: "https://github.com/huoshi111/huoshiuser0/blob/main/IMG_20241122_005904.jpg?raw=true"  },
+            "Renyi": { password: "1Renyi1234", infoContentId: "user-content-c-info", tasksContentId: "user-content-c-tasks", notiContentId:"user-content-c-noti", linkContentId:"user-content-c-link", avatar: "https://github.com/huoshi111/huoshiuser0/blob/main/mmexport1732233437733.jpg?raw=true"  },
+            "Yanyan": { password: "6Yanyan2009", infoContentId: "user-content-d-info", tasksContentId: "user-content-d-tasks", notiContentId:"user-content-d-noti", linkContentId:"user-content-d-link", avatar: "https://github.com/huoshi111/huoshiuser0/blob/main/mmexport1732233433960.jpg?raw=true"  }
+        };
+
+        function showLoginModal() {
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('login-modal').style.display = 'block';
+        }
+
+        function closeLoginModal() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('login-modal').style.display = 'none';
+        }
+
+        document.getElementById('overlay').onclick = closeLoginModal;
+
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+
+            if (users[username] && users[username].password === password) {
+        const loginBtn = document.getElementById('login-btn');
+        const avatarUrl = users[username].avatar; // 获取用户头像地址
+        loginBtn.innerHTML = `
+            <div class="user-info">
+                <img src="${avatarUrl}" alt="头像">
+                <span>${username}</span>
+            </div>`;
+        loginBtn.onclick = null; // 禁用登录按钮的默认功能
+        closeLoginModal();
+
+        const user = users[username];
+    addUserButtons(user.infoContentId, user.tasksContentId, user.notiContentId, user.linkContentId );
+} else {
+    
+        alert('用户名或密码错误');
+    }
+}
+
+function showContent(sectionId) {
+    const sections = document.querySelectorAll('.content-section');
+    sections.forEach(section => {
+        section.classList.remove('active');
+    });
+    document.getElementById(sectionId).classList.add('active');
+}
+
+
+        function addUserButtons(infoContentId, tasksContentId, notiContentId, linkContentId) {
+            const userButtons = document.getElementById('user-buttons');
+
+            // 添加 "个人信息" 按钮
+            const infoButton = document.createElement('button');
+            infoButton.textContent = "编程课时间";
+            infoButton.onclick = () => showContent(infoContentId);
+            userButtons.appendChild(infoButton);
+
+            // 添加 "任务" 按钮
+            const tasksButton = document.createElement('button');
+            tasksButton.textContent = "任务";
+            tasksButton.onclick = () => showContent(tasksContentId);
+            userButtons.appendChild(tasksButton);
+
+            const notiButton = document.createElement('button');
+            notiButton.textContent = "团队成员职责";
+            notiButton.onclick = () => showContent(notiContentId);
+            userButtons.appendChild(notiButton);
+
+            const linkButton = document.createElement('button');
+            linkButton.textContent = "工具";
+            linkButton.onclick = () => showContent(linkContentId);
+            userButtons.appendChild(linkButton);
+        }
+
+        function showContent(sectionId) {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+        }
+    </script>
+
+<script>
+    const lang = 'zh-CN'; // 语言环境：中文
+    const weekdays = ['一', '二', '三', '四', '五', '六', '日']; // 星期名称，周日最后
+
+    function generateCalendar(year, month) {
+        const daysContainer = document.getElementById('calendar-days');
+        const title = document.getElementById('calendar-title');
+        const weekdaysContainer = document.getElementById('calendar-weekdays');
+
+        // 清空之前的内容
+        daysContainer.innerHTML = '';
+        weekdaysContainer.innerHTML = '';
+
+        // 更新标题
+        const monthName = new Intl.DateTimeFormat(lang, { month: 'long' }).format(new Date(year, month));
+        title.textContent = `${year}年${monthName}`;
+
+        // 显示星期名称
+        weekdays.forEach(day => {
+            const dayDiv = document.createElement('div');
+            dayDiv.textContent = `周${day}`;
+            weekdaysContainer.appendChild(dayDiv);
+        });
+
+        // 获取该月的第一天和总天数
+        const firstDay = (new Date(year, month, 1).getDay() + 6) % 7; // 调整为周一开始
+        const totalDays = new Date(year, month + 1, 0).getDate();
+
+        // 填充空白前导
+        for (let i = 0; i < firstDay; i++) {
+            const emptyDiv = document.createElement('div');
+            daysContainer.appendChild(emptyDiv);
+        }
+
+        // 填充日历日期
+        const today = new Date();
+        for (let day = 1; day <= totalDays; day++) {
+            const dayDiv = document.createElement('div');
+            dayDiv.textContent = day;
+
+            // 如果是今天，标记
+            if (
+                year === today.getFullYear() &&
+                month === today.getMonth() &&
+                day === today.getDate()
+            ) {
+                dayDiv.classList.add('today');
+            }
+
+            daysContainer.appendChild(dayDiv);
+        }
+    }
+
+    // 初始化
+    const today = new Date();
+    const currentYear = today.getFullYear();
+    const currentMonth = today.getMonth();
+
+    generateCalendar(currentYear, currentMonth);
+</script>
+
+<!--下面是视频介绍代码-->
+<script>
+    const customVideoContainer = document.getElementById('customVideoContainer');
+    const customVideoModal = document.getElementById('customVideoModal');
+    const customModalVideo = document.getElementById('customModalVideo');
+    const customCloseModal = document.getElementById('customCloseModal');
+
+    // 点击广告视频，打开模态窗口
+    customVideoContainer.addEventListener('click', () => {
+        customVideoModal.style.display = 'flex';
+        customModalVideo.muted = false; // 取消静音
+        customModalVideo.currentTime = 0; // 从头播放
+        customModalVideo.play();
+    });
+
+    // 点击关闭按钮，关闭模态窗口
+    customCloseModal.addEventListener('click', () => {
+        customVideoModal.style.display = 'none';
+        customModalVideo.pause();
+        customModalVideo.currentTime = 0;
+    });
+
+    // 点击模态窗口背景关闭
+    customVideoModal.addEventListener('click', (event) => {
+        if (event.target === customVideoModal) {
+            customVideoModal.style.display = 'none';
+            customModalVideo.pause();
+            customModalVideo.currentTime = 0;
+        }
+    });
+</script>
+
+<script>
+    // 获取全屏播放容器和视频元素
+    const uniqueFullscreenContainer = document.getElementById('uniqueFullscreenContainer');
+    const uniqueFullscreenVideo = document.getElementById('uniqueFullscreenVideo');
+    const uniqueAdVideos = document.querySelectorAll('.unique-ad-video');
+
+    // 为每个广告视频绑定点击事件
+    uniqueAdVideos.forEach(adVideo => {
+        adVideo.addEventListener('click', () => {
+            const videoSrc = adVideo.getAttribute('data-src'); // 获取视频的真实链接
+            uniqueFullscreenVideo.src = videoSrc; // 设置全屏播放视频
+            uniqueFullscreenVideo.currentTime = adVideo.currentTime; // 同步播放位置
+            uniqueFullscreenContainer.style.display = 'flex'; // 显示全屏容器
+            uniqueFullscreenVideo.play(); // 播放全屏视频
+        });
+    });
+
+    // 关闭全屏播放
+    function closeUniqueFullscreen() {
+        uniqueFullscreenContainer.style.display = 'none'; // 隐藏全屏容器
+        uniqueFullscreenVideo.pause(); // 暂停全屏播放
+        uniqueFullscreenVideo.src = ''; // 清空全屏视频
+    }
+
+    function toggleSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    const content = document.querySelector('.content');
+    const button = document.getElementById('toggleSidebarButton');
+
+    if (sidebar.classList.contains('hidden')) {
+        sidebar.classList.remove('hidden');
+        content.classList.remove('fullscreen');
+        button.textContent = "☰"; // 恢复为打开图标
+    } else {
+        sidebar.classList.add('hidden');
+        content.classList.add('fullscreen');
+        button.textContent = "→"; // 显示关闭图标
+    }
+}
+</script>
+
+</body>
+</html>
