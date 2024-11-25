@@ -21,7 +21,7 @@
             width: 100%;
         }
         .sidebar {
-            background-color: #79e0db;
+            background-color: #7dc5a2;
             color: #0b0b0b;
             display: flex;
             flex-direction: column;
@@ -31,24 +31,32 @@
             font-size: 24px;
             margin: 20px 0;
         }
+
         .menu {
             display: flex;
             flex-direction: column;
             flex-grow: 1;
             width: 100%;
         }
+
+              /* 按钮样式 */
         .menu button {
-            background-color: #5fd2d2;
-            color: #171717c5;
+            background-color: #58d691; /* 按钮背景颜色 */
+            color: rgba(18, 18, 18, 0.756);
             border: none;
-            padding: 10px 0;
-            font-size: 18px;
+            padding: 12px 15px;
+            font-size: 16px;
+            text-align: left; /* 左对齐文字 */
+            border-radius: 2px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s ease; /* 添加动画效果 */
             width: 100%;
         }
-        .menu button:hover {
-            background-color: #5babae;
+
+               /* 悬停效果 */
+       .menu button:hover {
+            background-color: #1f9f68; /* 悬停时的背景色 */
+            transform: scale(1.06); /* 放大效果 */
         }
         .content {
             padding: 20px;
@@ -77,11 +85,12 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: rgb(145, 145, 145);
+            background-color: rgba(0, 0, 0, 0.742);
             padding: 60px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             border-radius: 8px;
             z-index: 1000;
+            color: #2be1a4;
         }
         .login-modal input {
             display: block;
@@ -92,7 +101,7 @@
         .login-modal button {
             padding: 8px;
             width: 100%;
-            background-color: #00d6bd;
+            background-color: #00d687;
             color: rgb(0, 0, 0);
             border: none;
             cursor: pointer;
@@ -306,7 +315,7 @@
         <div class="sidebar">
             <img src="https://github.com/huoshi111/huoshistudioimage/blob/main/huoshistudioimage.png?raw=true" style=" height: 90px; width: 160px; ">
             <div class="menu">
-                <button style="background-color: #35f6df;" id="login-btn" onclick="showLoginModal()">登录</button>
+                <button style="background-color: #28d4ba;" id="login-btn" onclick="showLoginModal()">登录</button>
                 <button onclick="showContent('homepage')">主页面</button>
                 <button onclick="showContent('section1')">介绍</button>
                 <button onclick="showContent('section2')">消息</button>
@@ -710,6 +719,7 @@
                 
                 <ul>
                     <li><strong>领导者（团队最高层）：</strong>负责制定团队规划和目标，确保团队的方向清晰且具有前瞻性。</li>
+                    <li><strong>助手管理Altavoz (Yezhen)</strong>负责帮助领导者重新发言 Ayudar al lider repetir y mandar los ordenes al grupo.</li>
                     <li><strong>检查和发言（管理）(苏林，腍一)：</strong>负责检查每一位成员的工作进展是否正常，并就团队的新任务或建议进行发言。</li>
                     <li><strong>组织者 (苏林)：</strong>规划和组织项目，合理分配每位成员的任务，确保项目高效完成。</li>
                     <li><strong>视频剪辑创作者 (妍妍)：</strong>负责视频的策划、设计和剪辑工作，同时设计和撰写其他需要的文案或文字内容。</li>
@@ -839,6 +849,7 @@
                 
                 <ul>
                     <li><strong>领导者（团队最高层）：</strong>负责制定团队规划和目标，确保团队的方向清晰且具有前瞻性。</li>
+                    <li><strong>助手管理Altavoz (Yezhen)</strong>负责帮助领导者重新发言 Ayudar al lider repetir y mandar los ordenes al grupo.</li>
                     <li><strong>检查和发言（管理）(苏林，腍一)：</strong>负责检查每一位成员的工作进展是否正常，并就团队的新任务或建议进行发言。</li>
                     <li><strong>组织者 (苏林)：</strong>规划和组织项目，合理分配每位成员的任务，确保项目高效完成。</li>
                     <li><strong>视频剪辑创作者 (妍妍)：</strong>负责视频的策划、设计和剪辑工作，同时设计和撰写其他需要的文案或文字内容。</li>
@@ -972,6 +983,7 @@
                 
                 <ul>
                     <li><strong>领导者（团队最高层）：</strong>负责制定团队规划和目标，确保团队的方向清晰且具有前瞻性。</li>
+                    <li><strong>助手管理Altavoz (Yezhen)</strong>负责帮助领导者重新发言 Ayudar al lider repetir y mandar los ordenes al grupo.</li>
                     <li><strong>检查和发言（管理）(苏林，腍一)：</strong>负责检查每一位成员的工作进展是否正常，并就团队的新任务或建议进行发言。</li>
                     <li><strong>组织者 (苏林)：</strong>规划和组织项目，合理分配每位成员的任务，确保项目高效完成。</li>
                     <li><strong>视频剪辑创作者 (妍妍)：</strong>负责视频的策划、设计和剪辑工作，同时设计和撰写其他需要的文案或文字内容。</li>
@@ -1002,6 +1014,47 @@
                 </center>
             </div>
 
+            <div id="user-content-e-info" class="content-section">
+                <h2>编程课时间</h2>
+                <p>火狮 编程课时间</p>
+                <br>
+                   <h2> 空闲时间</h2>
+                <br>
+                <h>上午 9:30 - 12:30 </h>
+                <br>
+                <h>下午 16:30 - 19:00 </h>
+                <br><br>
+                <h2>排课规则</h2>
+                <br>
+                <h>每周1小时课</h>
+                <br>
+                <h>优先安排 周六</h>
+                <br>
+                <h>备选安排 如周六无空，则改为周日，会有消息进行通知</h>
+                <br><br>
+                <h2>空闲日期</h2>
+                <br>
+                <p>-11 月<br>周六 11/23 11/30 <br> 周日 11/24 <br> -12月 <br> 周日 12/7 12/14 12/21 12/28 <br> 周日 12/1 12/8 12/15 12/22 12/29 </p>
+
+            </div>
+
+            <div id="user-content-e-noti" class="content-section">
+                <h2>团队成员职责 用户 Yezhen</h2>
+                <h1>火狮团队 HUOSHI</h1>
+                <p>火狮团队 HUOSHI 是一个团结创造力与激情的团队，每位成员各司其职，协作完成项目。以下是团队的职责分工：</p>
+                
+                <ul>
+                    <li><strong>领导者（团队最高层）：</strong>负责制定团队规划和目标，确保团队的方向清晰且具有前瞻性。</li>
+                    <li><strong>助手管理Altavoz (Yezhen)</strong>负责帮助领导者重新发言 Ayudar al lider repetir y mandar los ordenes al grupo.</li>
+                    <li><strong>检查和发言（管理）(苏林，腍一)：</strong>负责检查每一位成员的工作进展是否正常，并就团队的新任务或建议进行发言。</li>
+                    <li><strong>组织者 (苏林)：</strong>规划和组织项目，合理分配每位成员的任务，确保项目高效完成。</li>
+                    <li><strong>视频剪辑创作者 (妍妍)：</strong>负责视频的策划、设计和剪辑工作，同时设计和撰写其他需要的文案或文字内容。</li>
+                    <li><strong>音乐音频创作者 (腍一)：</strong>负责制作音乐和录制音频，与视频剪辑创作者合作，确保任务的音画结合完美。</li>
+                </ul>
+                
+                <p>火狮团队秉承合作精神与专业态度，为每一个项目注入热情与创意！</p>
+            </div>
+
         </div>
     </div>
 
@@ -1018,7 +1071,8 @@
             "admin": { password: "111aaa", infoContentId: "user-content-a-info", tasksContentId: "user-content-a-tasks", notiContentId:"user-content-a-noti", linkContentId:"user-content-a-link", avatar: "https://example.com/avatar-a.png"  },
             "Surlin": { password: "2Surlin2008", infoContentId: "user-content-b-info", tasksContentId: "user-content-b-tasks", notiContentId:"user-content-b-noti", linkContentId:"user-content-b-link", avatar: "https://github.com/huoshi111/huoshiuser0/blob/main/IMG_20241122_005904.jpg?raw=true"  },
             "Renyi": { password: "1Renyi1234", infoContentId: "user-content-c-info", tasksContentId: "user-content-c-tasks", notiContentId:"user-content-c-noti", linkContentId:"user-content-c-link", avatar: "https://github.com/huoshi111/huoshiuser0/blob/main/mmexport1732233437733.jpg?raw=true"  },
-            "Yanyan": { password: "6Yanyan2009", infoContentId: "user-content-d-info", tasksContentId: "user-content-d-tasks", notiContentId:"user-content-d-noti", linkContentId:"user-content-d-link", avatar: "https://github.com/huoshi111/huoshiuser0/blob/main/mmexport1732233433960.jpg?raw=true"  }
+            "Yanyan": { password: "6Yanyan2009", infoContentId: "user-content-d-info", tasksContentId: "user-content-d-tasks", notiContentId:"user-content-d-noti", linkContentId:"user-content-d-link", avatar: "https://github.com/huoshi111/huoshiuser0/blob/main/mmexport1732233433960.jpg?raw=true"  },
+            "Yezhen": { password: "3Yezhen2009", infoContentId: "user-content-e-info", notiContentId: "user-content-e-noti", avatar: "https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png"}
         };
 
         function showLoginModal() {
@@ -1034,11 +1088,10 @@
         document.getElementById('overlay').onclick = closeLoginModal;
 
         function login() {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
 
-
-            if (users[username] && users[username].password === password) {
+    if (users[username] && users[username].password === password) {
         const loginBtn = document.getElementById('login-btn');
         const avatarUrl = users[username].avatar; // 获取用户头像地址
         loginBtn.innerHTML = `
@@ -1050,12 +1103,12 @@
         closeLoginModal();
 
         const user = users[username];
-    addUserButtons(user.infoContentId, user.tasksContentId, user.notiContentId, user.linkContentId );
-} else {
-    
+        addUserButtons(user.infoContentId, user.tasksContentId, user.notiContentId, user.linkContentId);
+    } else {
         alert('用户名或密码错误');
     }
 }
+
 
 function showContent(sectionId) {
     const sections = document.querySelectorAll('.content-section');
@@ -1066,31 +1119,39 @@ function showContent(sectionId) {
 }
 
 
-        function addUserButtons(infoContentId, tasksContentId, notiContentId, linkContentId) {
-            const userButtons = document.getElementById('user-buttons');
+function addUserButtons(infoContentId, tasksContentId, notiContentId, linkContentId) {
+    const userButtons = document.getElementById('user-buttons');
 
-            // 添加 "个人信息" 按钮
-            const infoButton = document.createElement('button');
-            infoButton.textContent = "编程课时间";
-            infoButton.onclick = () => showContent(infoContentId);
-            userButtons.appendChild(infoButton);
+    // 动态添加按钮，只有在 ID 存在时才创建对应按钮
+    if (infoContentId) {
+        const infoButton = document.createElement('button');
+        infoButton.textContent = "编程课时间";
+        infoButton.onclick = () => showContent(infoContentId);
+        userButtons.appendChild(infoButton);
+    }
 
-            // 添加 "任务" 按钮
-            const tasksButton = document.createElement('button');
-            tasksButton.textContent = "任务";
-            tasksButton.onclick = () => showContent(tasksContentId);
-            userButtons.appendChild(tasksButton);
+    if (tasksContentId) {
+        const tasksButton = document.createElement('button');
+        tasksButton.textContent = "任务";
+        tasksButton.onclick = () => showContent(tasksContentId);
+        userButtons.appendChild(tasksButton);
+    }
 
-            const notiButton = document.createElement('button');
-            notiButton.textContent = "团队成员职责";
-            notiButton.onclick = () => showContent(notiContentId);
-            userButtons.appendChild(notiButton);
+    if (notiContentId) {
+        const notiButton = document.createElement('button');
+        notiButton.textContent = "团队成员职责";
+        notiButton.onclick = () => showContent(notiContentId);
+        userButtons.appendChild(notiButton);
+    }
 
-            const linkButton = document.createElement('button');
-            linkButton.textContent = "工具";
-            linkButton.onclick = () => showContent(linkContentId);
-            userButtons.appendChild(linkButton);
-        }
+    if (linkContentId) {
+        const linkButton = document.createElement('button');
+        linkButton.textContent = "工具";
+        linkButton.onclick = () => showContent(linkContentId);
+        userButtons.appendChild(linkButton);
+    }
+}
+
 
         function showContent(sectionId) {
             const sections = document.querySelectorAll('.content-section');
