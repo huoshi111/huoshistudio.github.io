@@ -60,7 +60,7 @@
         }
         .content {
             padding: 20px;
-            background-color: #d4f3edfb;
+            background-color: #a0e0cefb;
             overflow-y: auto;
             height: calc(100vh - 40px); /* 根据需要调整高度 */
         }
@@ -292,25 +292,27 @@
             height: auto;
         }
     </style>
-        <script>
-            // 禁止鼠标右键菜单
-            document.addEventListener('contextmenu', function(e) {
+    <script>
+
+        // 禁止鼠标右键菜单
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        // 禁止 F12 和特定键组合（如 Ctrl+Shift+I）
+        document.addEventListener('keydown', function(e) {
+            if (
+                e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'C' || e.key === 'J')) || 
+                (e.ctrlKey && e.key === 'U')
+            ) {
                 e.preventDefault();
-            });
-    
-            // 禁止 F12 和特定键组合（如 Ctrl+Shift+I）
-            document.addEventListener('keydown', function(e) {
-                if (
-                    e.key === 'F12' || 
-                    (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'C' || e.key === 'J')) || 
-                    (e.ctrlKey && e.key === 'U')
-                ) {
-                    e.preventDefault();
-                }
-            });
-        </script>  
+            }
+        });
+</script>
 </head>
 <body>
+
     <div class="container">
         <div class="sidebar">
             <img src="https://github.com/huoshi111/huoshistudioimage/blob/main/huoshistudioimage.png?raw=true" style=" height: 90px; width: 160px; ">
@@ -447,11 +449,16 @@
             </div>
             <div id="section2" class="content-section">
                 <h2>消息</h2>
-                <p><strong>火狮 STUDIO 网站 已更新， 优化按钮和用户体验。</strong></p>
+                <p>目前暂无任何消息，等待更新。</p>
                 <br><br><br><br>
             <center>
                 <strong> 这里怎么找也没有信息的。。。</strong>
             </center>
+            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<center>
+    <h6 style="color: #333;">火狮 HUOSHI © 2024 </h6>
+    <h6 style="color: #333;">火狮 STUDIO 网站 火狮 工作室 - 谷歌Google 信息保护标准，保障用户隐私与安全。</h6>
+</center>
             </div>
             <div id="section3" class="content-section">
                 <h2>火狮团队</h2>
@@ -584,6 +591,29 @@
                 -->
             </div>
 
+            <div  style="background-image: url(https://i.ibb.co/LN9RPw3/image.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; background-size: cover;" id="user-content-a-act" class="content-section">
+                <center><h2><strong>火狮团队 活动</strong></h2><br>
+                    <br>                
+                </center>
+                <strong>
+                    <h3>- 在开始抽奖之前，先阅读以下内容</h3>
+                    <h5>- 需要再次登录你的火狮 STUDIO 账号确认身份</h5>
+                    <p>- 幸运数字有: <br> - 2 4 5 8 <br> - 数字 4 获得 1× 亚克力周边 <br> - 数字5 获得 1× 贴纸周边 <br> - 数字2 获得 1× 亚克力周边 <br> - 数字8 获得 1× 贴纸周边 </p>
+                    <p>- 二位数可获得:</p>
+                    <ul>
+                        <li>2 和 8 获得 2× 贴纸周边</li>
+                        <li>4 和 2 获得 2× 亚克力周边</li>
+                        <li>5 和 4 获得 2× 贴纸周边</li>
+                    </ul>
+                    <h4> - 抽完之后需要截图发到这里 <a href="https://forms.gle/wPBrvsrJ7W3Gt9Ga6">抽奖活动截图</a></h4>
+                </strong>
+                    <br><br>
+                    <center>
+                    <iframe src="https://huoshi111.github.io/huoshichoujiang2/%E7%81%AB%E7%8B%AE%E6%8A%BD%E5%A5%96%E6%B4%BB%E5%8A%A8.html" width="620" height="1150" style="border-radius: 20px; border: none;"  title="火狮智能聊天"></iframe>
+                    </center>
+                <br>
+            </div>
+
             <div id="user-content-a-noti" class="content-section">
                 <h2>团队成员职责</h2>
                 <h1>火狮团队 HUOSHI</h1>
@@ -710,6 +740,29 @@
                 <!--
                 <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfDiM1JOiqyJEiVdiGkNEzl1Ls2PvGWIlusBlj6NDsSaqLw3w/viewform?embedded=true" width="620" height="1709" frameborder="0" marginheight="0" marginwidth="0">正在加载…</iframe>
                 -->
+            </div>
+
+            <div  style="background-image: url(https://i.ibb.co/LN9RPw3/image.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; background-size: cover;" id="user-content-b-act" class="content-section">
+                <center><h2><strong>火狮团队 活动</strong></h2><br>
+                    <br>                
+                </center>
+                <strong>
+                    <h3>- 在开始抽奖之前，先阅读以下内容</h3>
+                    <h5>- 需要再次登录你的火狮 STUDIO 账号确认身份</h5>
+                    <p>- 幸运数字有: <br> - 2 4 5 8 <br> - 数字 4 获得 1× 亚克力周边 <br> - 数字5 获得 1× 贴纸周边 <br> - 数字2 获得 1× 亚克力周边 <br> - 数字8 获得 1× 贴纸周边 </p>
+                    <p>- 二位数可获得:</p>
+                    <ul>
+                        <li>2 和 8 获得 2× 贴纸周边</li>
+                        <li>4 和 2 获得 2× 亚克力周边</li>
+                        <li>5 和 4 获得 2× 贴纸周边</li>
+                    </ul>
+                    <h4> - 抽完之后需要截图发到这里 <a href="https://forms.gle/wPBrvsrJ7W3Gt9Ga6">抽奖活动截图</a></h4>
+                </strong>
+                    <br><br>
+                    <center>
+                    <iframe src="https://huoshi111.github.io/huoshichoujiang2/%E7%81%AB%E7%8B%AE%E6%8A%BD%E5%A5%96%E6%B4%BB%E5%8A%A8.html" width="620" height="1150" style="border-radius: 20px; border: none;"  title="火狮智能聊天"></iframe>
+                    </center>
+                <br>
             </div>
 
             <div id="user-content-b-noti" class="content-section">
@@ -840,6 +893,29 @@
                 <!--
                 <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfDiM1JOiqyJEiVdiGkNEzl1Ls2PvGWIlusBlj6NDsSaqLw3w/viewform?embedded=true" width="620" height="1709" frameborder="0" marginheight="0" marginwidth="0">正在加载…</iframe>
                 -->
+            </div>
+
+            <div  style="background-image: url(https://i.ibb.co/LN9RPw3/image.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; background-size: cover;" id="user-content-c-act" class="content-section">
+                <center><h2><strong>火狮团队 活动</strong></h2><br>
+                    <br>                
+                </center>
+                <strong>
+                    <h3>- 在开始抽奖之前，先阅读以下内容</h3>
+                    <h5>- 需要再次登录你的火狮 STUDIO 账号确认身份</h5>
+                    <p>- 幸运数字有: <br> - 2 4 5 8 <br> - 数字 4 获得 1× 亚克力周边 <br> - 数字5 获得 1× 贴纸周边 <br> - 数字2 获得 1× 亚克力周边 <br> - 数字8 获得 1× 贴纸周边 </p>
+                    <p>- 二位数可获得:</p>
+                    <ul>
+                        <li>2 和 8 获得 2× 贴纸周边</li>
+                        <li>4 和 2 获得 2× 亚克力周边</li>
+                        <li>5 和 4 获得 2× 贴纸周边</li>
+                    </ul>
+                    <h4> - 抽完之后需要截图发到这里 <a href="https://forms.gle/wPBrvsrJ7W3Gt9Ga6">抽奖活动截图</a></h4>
+                </strong>
+                    <br><br>
+                    <center>
+                    <iframe src="https://huoshi111.github.io/huoshichoujiang2/%E7%81%AB%E7%8B%AE%E6%8A%BD%E5%A5%96%E6%B4%BB%E5%8A%A8.html" width="620" height="1150" style="border-radius: 20px; border: none;"  title="火狮智能聊天"></iframe>
+                    </center>
+                <br>
             </div>
 
             <div id="user-content-c-noti" class="content-section">
@@ -1068,11 +1144,11 @@
     </div>
     <script>
         const users = {
-            "admin": { password: "111aaa", infoContentId: "user-content-a-info", tasksContentId: "user-content-a-tasks", notiContentId:"user-content-a-noti", linkContentId:"user-content-a-link", avatar: "https://example.com/avatar-a.png"  },
-            "Surlin": { password: "2Surlin2008", infoContentId: "user-content-b-info", tasksContentId: "user-content-b-tasks", notiContentId:"user-content-b-noti", linkContentId:"user-content-b-link", avatar: "https://github.com/huoshi111/huoshiuser0/blob/main/IMG_20241122_005904.jpg?raw=true"  },
-            "Renyi": { password: "1Renyi1234", infoContentId: "user-content-c-info", tasksContentId: "user-content-c-tasks", notiContentId:"user-content-c-noti", linkContentId:"user-content-c-link", avatar: "https://github.com/huoshi111/huoshiuser0/blob/main/mmexport1732233437733.jpg?raw=true"  },
+            "admin": { password: "111aaa", infoContentId: "user-content-a-info", tasksContentId: "user-content-a-tasks", notiContentId:"user-content-a-noti", linkContentId:"user-content-a-link", actContentId:"user-content-a-act", avatar: "https://example.com/avatar-a.png"  },
+            "Surlin": { password: "2Surlin2008", infoContentId: "user-content-b-info", tasksContentId: "user-content-b-tasks", notiContentId:"user-content-b-noti", linkContentId:"user-content-b-link", actContentId:"user-content-b-act", avatar: "https://github.com/huoshi111/huoshiuser0/blob/main/IMG_20241122_005904.jpg?raw=true"  },
+            "Renyi": { password: "1Renyi1234", infoContentId: "user-content-c-info", tasksContentId: "user-content-c-tasks", notiContentId:"user-content-c-noti", linkContentId:"user-content-c-link", actContentId:"user-content-c-act", avatar: "https://github.com/huoshi111/huoshiuser0/blob/main/mmexport1732233437733.jpg?raw=true"  },
             "Yanyan": { password: "6Yanyan2009", infoContentId: "user-content-d-info", tasksContentId: "user-content-d-tasks", notiContentId:"user-content-d-noti", linkContentId:"user-content-d-link", avatar: "https://github.com/huoshi111/huoshiuser0/blob/main/mmexport1732233433960.jpg?raw=true"  },
-            "Yezhen": { password: "3Yezhen2009", infoContentId: "user-content-e-info", notiContentId: "user-content-e-noti", avatar: "https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png"}
+            "Yezheng": { password: "3Yezheng2009", infoContentId: "user-content-e-info", notiContentId: "user-content-e-noti", avatar: "https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png"}
         };
 
         function showLoginModal() {
@@ -1103,7 +1179,7 @@
         closeLoginModal();
 
         const user = users[username];
-        addUserButtons(user.infoContentId, user.tasksContentId, user.notiContentId, user.linkContentId);
+        addUserButtons(user.infoContentId, user.tasksContentId, user.notiContentId, user.actContentId, user.linkContentId);
     } else {
         alert('用户名或密码错误');
     }
@@ -1119,7 +1195,7 @@ function showContent(sectionId) {
 }
 
 
-function addUserButtons(infoContentId, tasksContentId, notiContentId, linkContentId) {
+function addUserButtons(infoContentId, tasksContentId, notiContentId, actContentId, linkContentId) {
     const userButtons = document.getElementById('user-buttons');
 
     // 动态添加按钮，只有在 ID 存在时才创建对应按钮
@@ -1142,6 +1218,13 @@ function addUserButtons(infoContentId, tasksContentId, notiContentId, linkConten
         notiButton.textContent = "团队成员职责";
         notiButton.onclick = () => showContent(notiContentId);
         userButtons.appendChild(notiButton);
+    }
+
+    if (actContentId) {
+        const actButton = document.createElement('button');
+        actButton.textContent = "活动";
+        actButton.onclick = () => showContent(actContentId);
+        userButtons.appendChild(actButton);
     }
 
     if (linkContentId) {
@@ -1294,7 +1377,8 @@ function addUserButtons(infoContentId, tasksContentId, notiContentId, linkConten
         button.textContent = "→"; // 显示关闭图标
     }
 }
-</script>
 
+
+</script>
 </body>
 </html>
